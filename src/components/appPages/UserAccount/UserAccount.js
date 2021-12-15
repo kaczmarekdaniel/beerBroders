@@ -5,24 +5,42 @@ import { AppContext } from "providers/AppProvider";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
-  background-color: ${({ theme }) => theme.colors.backgroundColor};
+  height: 95vh;
   color: white;
   flex-direction: column;
+  justify-content: flex-start;
+`;
 
-  @media screen and (min-width: 1024px) {
-    padding: 5% 20% 2% 20%;
-  }
+const UserDataSection = styled.div`
+  width: 40%;
+  height: 40%;
+  color: white;
+  border: 1px solid white;
+  flex-direction: column;
 `;
 
 const UserAccount = () => {
   const { currentUser, setCurrentUser } = useContext(AppContext);
   if (currentUser != null) {
-    console.log(currentUser.email);
+    console.log(currentUser);
   } else {
     console.log("user not logged in");
   }
-  return <Wrapper className="flex"></Wrapper>;
+  return (
+    <Wrapper className="flex">
+      {currentUser != null ? (
+        <>
+          <UserDataSection className="flex">
+            <img src={currentUser.photoURL} />
+            <p>{currentUser.displayName}</p>
+            <p>{currentUser.email}</p>
+          </UserDataSection>
+        </>
+      ) : (
+        console.log("xd")
+      )}
+    </Wrapper>
+  );
 };
 
 export default UserAccount;

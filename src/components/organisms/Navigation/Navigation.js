@@ -17,7 +17,7 @@ const Button = styled(NavLink).attrs({ activeClassName: "active" })`
 `;
 
 const Nav = styled.div`
-  width: 300px;
+  width: auto;
   height: 100%;
   position: relative;
 `;

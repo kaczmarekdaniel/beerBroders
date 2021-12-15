@@ -1,20 +1,49 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useDisclosure } from "@chakra-ui/react";
+import {
+  Modal,
+  Button,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 
 const Element = styled.div`
-  width: 30%;
+  width: 100%;
   height: 45%;
   min-height: 350px;
-  margin: 20px 1% 20px 1%;
+  margin: 20px 20px 20px 20px;
   border: 1px solid #c9c9c9;
   align-items: flex-end;
   flex-direction: column;
+  &:first-of-type {
+    margin-top: 50%;
+  }
+
+  @media (min-width: 1024px) {
+    width: 30%;
+    margin: 20px 1% 20px 1%;
+    height: 45%;
+    &:first-of-type {
+      margin-top: 20px;
+    }
+  }
 `;
 
 const Review = styled.div`
   width: 30%;
   height: 100%;
   left: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: lightseagreen;
+  box-shadow: lightgrey -2px 4px 10px;
+
   top: 0;
 `;
 
@@ -63,9 +92,23 @@ const SideDiv = styled.div`
   flex-direction: column;
 `;
 
+const Header = styled.div`
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  div {
+    margin: 0 20px 0 0;
+  }
+`;
+
 const BeerElement = ({ item }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const newArr = [].concat(item.reviews);
+  item.reviewCount = newArr.length;
+
   const average = (array) => array.reduce((a, b) => a + b) / array.length;
+  item.average = average(newArr);
+
   return (
     <Element className="flex">
       <Photo className="flex">
@@ -73,12 +116,35 @@ const BeerElement = ({ item }) => {
       </Photo>
       <BottomTitle className="flex">
         <SideDiv className="flex">
-          <Review className="flex">{average(newArr)}</Review>
+          <Review className="flex">{item.average}</Review>
         </SideDiv>
         <CenterDiv className="flex">
           <p>{item.brand}</p>
           <p>{item.name}</p>
-          <BottomButton> Zobacz więcej </BottomButton>
+          <Button onClick={onOpen} colorScheme="purple" variant="outline">
+            Zobacz więcej
+          </Button>
+
+          <Modal onClose={onClose} isOpen={isOpen} isCentered>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>
+                <Header className="flex">
+                  <Review className="flex">{item.average}</Review>
+
+                  <div>
+                    <p>{item.brand}</p>
+                    <p>{item.name}</p>
+                  </div>
+                </Header>
+              </ModalHeader>
+              <ModalCloseButton />
+              <ModalBody></ModalBody>
+              <ModalFooter>
+                <Button onClick={onClose}>Close</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </CenterDiv>
         <SideDiv className="flex"></SideDiv>
       </BottomTitle>

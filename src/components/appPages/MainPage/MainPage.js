@@ -1,30 +1,30 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { doc } from "firebase/firestore";
 
 import { db } from "../../../firebase";
+import { Select } from "@chakra-ui/react";
 
 import ContentSection from "components/organisms/ContentSection/ContentSection";
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: auto;
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.backgroundColor};
   color: white;
   flex-direction: column;
 
   @media screen and (min-width: 1024px) {
-    padding: 5% 20% 2% 20%;
+    padding: 5% 0 2% 0;
   }
 `;
 
 const FilterBar = styled.div`
-  width: 50%;
+  width: 60%;
   margin: 5px;
   height: 10%;
-  border: 1px solid white;
   padding: 20px;
   flex-direction: row;
   position: absolute;
@@ -32,41 +32,53 @@ const FilterBar = styled.div`
 `;
 
 const FilterBy = styled.div`
-  width: 50%;
+  width: 65%;
   height: 100%;
   margin-right: 5px;
 `;
 
 const FilterButton = styled.button`
-  width: 100px;
-  height: 40px;
+  width: auto;
+  height: auto;
   background-color: transparent;
-  border: 1px solid white;
-  margin: 5px;
+  border-bottom: 1px solid white;
+  margin: 5px 5px 0 5px;
+  font-size: 13px;
   color: white;
 
   &:hover {
-    background-color: grey;
-  }
-
-  &.active {
-    background-color: purple;
+    border-bottom: 1px solid blue;
   }
 `;
 
-const SearchBar = styled.input`
-  width: 50%;
+const SearchBar = styled.div`
+  width: 35%;
   margin-left: 5px;
   height: 50px;
   color: white;
-  padding: 0 5% 0 5%;
   font-size: 1rem;
   border: 1px solid white;
+  display: flex;
+  flex-direction: row;
+`;
+
+const SearchBarInput = styled.input`
   background-color: transparent;
+
+  height: 100%;
+  width: 75%;
+  padding: 0 5% 0 5%;
+`;
+
+const SearchBarButton = styled.button`
+  height: 100%;
+  width: 25%;
+  border-left: 1px solid white;
 `;
 
 const MainPage = () => {
   const [items, setItems] = useState([]);
+  const [dbQuery, setDBQuery] = useState(where("brand", "!=", true));
 
   const collectIdsAndDocs = (doc) => {
     return { id: doc.id, ...doc.data() };
@@ -74,22 +86,43 @@ const MainPage = () => {
 
   useEffect(async () => {
     const data = collection(db, "beers");
-    const q = query(data);
+    const q = query(data, dbQuery);
     const querySnapshot = await getDocs(q);
     const posts = querySnapshot.docs.map(collectIdsAndDocs);
     setItems(posts);
-  }, []);
+  }, [dbQuery]);
 
   return (
     <Wrapper className="flex">
       <FilterBar className="flex">
         <FilterBy className="flex">
-          <FilterButton className="active">Od najnowyszch</FilterButton>
+          <FilterButton
+            onClick={() => {
+              setDBQuery(where("brand", "!=", true));
+            }}
+          >
+            Od najnowyszch
+          </FilterButton>
           <FilterButton>Od najstarszych</FilterButton>
-          <FilterButton>Najlepsza ocena</FilterButton>
-          <FilterButton>Najgorsza ocena</FilterButton>
+          <FilterButton
+            onClick={() => {
+              setDBQuery(orderBy("reviews", "desc"));
+            }}
+          >
+            Najlepsza ocena
+          </FilterButton>
+          <FilterButton
+            onClick={() => {
+              setDBQuery(orderBy("reviews", "asc"));
+            }}
+          >
+            Najgorsza ocena
+          </FilterButton>
         </FilterBy>
-        <SearchBar placeholder="Perła..."></SearchBar>
+        <SearchBar>
+          <SearchBarInput placeholder="Perła..."></SearchBarInput>
+          <SearchBarButton>Szukaj</SearchBarButton>
+        </SearchBar>
       </FilterBar>
       <ContentSection items={items} />
     </Wrapper>

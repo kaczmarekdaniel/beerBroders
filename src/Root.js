@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { GlobalStyle } from "./assets/styles/GlobalStyle.js";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./assets/styles/theme";
-import "./scrollbar.css";
+import "assets/styles/scrollbar.css";
 import styled from "styled-components";
 import {
   BrowserRouter as Router,
@@ -14,7 +14,6 @@ import {
   Redirect,
   useLocation,
 } from "react-router-dom";
-import AppProvider from "providers/AppProvider.js";
 
 //component imports
 
@@ -29,17 +28,15 @@ const Root = () => {
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <AppProvider>
-          <Switch>
-            <Route path="/app" component={AppView} />
-            <Route path="/start">
-              <NavAndAppButton />
+        <Switch>
+          <Route path="/app" component={AppView} />
+          <Route path="/start">
+            <NavAndAppButton />
 
-              <StartView />
-            </Route>
-            <Redirect to="/start" />
-          </Switch>
-        </AppProvider>
+            <StartView />
+          </Route>
+          <Redirect to="/start" />
+        </Switch>
       </ThemeProvider>
     </Router>
   );

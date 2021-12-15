@@ -12,12 +12,22 @@ import {
 } from "react-router-dom";
 import AppContext from "providers/AppProvider.js";
 import AppProvider from "providers/AppProvider.js";
-
+import { useMediaQuery } from "@chakra-ui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
+} from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import "./styles.css";
 import MainPage from "components/appPages/MainPage/MainPage.js";
-import LoginForm from "components/appPages/LoginPage/LoginPage.js";
+import LoginForm from "components/appPages/LoginForm/LoginForm.js";
 import LoginButton from "components/atoms/LoginButton/LoginButton";
 import UserAccount from "components/appPages/UserAccount/UserAccount.js";
+import AddBeer from "components/appPages/AddBeer/AddBeer.js";
+import Nav from "components/molecules/Nav/Nav.js";
 
 const Wrapper = styled.div`
   padding-top: 10%;
@@ -35,33 +45,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const Nav = styled.div`
-  position: absolute;
-  width: 25%;
-  height: 5vh;
-  top: 10px;
-  border: 1px solid white;
-`;
-
-const NavBtn = styled(NavLink).attrs({
-  activeClassName: "active",
-  className: "flex",
-})`
-  min-width: 80px;
-  height: auto;
-  font-size: ${({ theme }) => theme.fontSize.l};
-  font-family: "Roboto", sans-serif;
-  margin: 10px;
-  text-decoration: none;
-  color: white;
-
-  &.active {
-    border-bottom: 1px solid #986abf;
-  }
-`;
-
 const AppView = () => {
   const [isShowLogin, setIsShowLogin] = useState(true);
+  const [isLargerThan1280] = useMediaQuery("(min-width: 1280px)");
 
   const handleLoginClick = () => {
     setIsShowLogin((isShowLogin) => !isShowLogin);
@@ -73,6 +59,7 @@ const AppView = () => {
 
   const handleLoginClose = () => {
     setIsShowLogin((isShowLogin) => !isShowLogin);
+    document.body.setAttribute("style", "");
   };
   return (
     <Router>
@@ -85,19 +72,38 @@ const AppView = () => {
               isShowLogin={isShowLogin}
               handleLoginClose={handleLoginClose}
             />
-            <Nav className="flex">
-              <NavBtn exact to={"/app"}>
-                Strona główna
-              </NavBtn>
-              <NavBtn to={"/app/main"}>Piwa</NavBtn>
-              <NavBtn to={"/app/account"}>Twoje konto</NavBtn>
-            </Nav>
+
+            {isLargerThan1280 ? (
+              <Nav />
+            ) : (
+              <>
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    variant="outline"
+                    pos="absolute"
+                    top="20px"
+                    left="20px"
+                    icon={<HamburgerIcon />}
+                  />
+                  <MenuList bg="white" color="black">
+                    <MenuItem>Strona główna</MenuItem>
+                    <MenuItem>Piwa</MenuItem>
+                    <MenuItem>Twoje konto</MenuItem>
+                  </MenuList>
+                </Menu>
+              </>
+            )}
             <Switch>
               <Route path="/app/main">
                 <MainPage />
               </Route>
               <Route path="/app/account">
                 <UserAccount />
+              </Route>
+              <Route path="/app/addbeer">
+                <AddBeer />
               </Route>
               <Route exact path="/app">
                 <h1>strona startowa apki</h1>

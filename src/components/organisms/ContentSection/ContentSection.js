@@ -36,6 +36,9 @@ const ContentSection = ({ items }) => {
             <Skeleton height="45%" w="30%" margin="20px 1% 20px 1%" />
             <Skeleton height="45%" w="30%" margin="20px 1% 20px 1%" />
             <Skeleton height="45%" w="30%" margin="20px 1% 20px 1%" />
+            <Skeleton height="45%" w="30%" margin="20px 1% 20px 1%" />
+            <Skeleton height="45%" w="30%" margin="20px 1% 20px 1%" />
+            <Skeleton height="45%" w="30%" margin="20px 1% 20px 1%" />
           </>
         ) : (
           items.map((item) => (
