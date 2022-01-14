@@ -23,18 +23,16 @@ import {
 import { HamburgerIcon } from "@chakra-ui/icons";
 import "./styles.css";
 import MainPage from "components/appPages/MainPage/MainPage.js";
-import LoginForm from "components/appPages/LoginForm/LoginForm.js";
-import LoginButton from "components/atoms/LoginButton/LoginButton";
+import LoginButton from "components/appPages/LoginButton/LoginButton";
 import UserAccount from "components/appPages/UserAccount/UserAccount.js";
 import AddBeer from "components/appPages/AddBeer/AddBeer.js";
-import Nav from "components/molecules/Nav/Nav.js";
+import Nav from "components/appPages/Nav/Nav.js";
 
 const Wrapper = styled.div`
-  padding-top: 10%;
+  padding-top: 10vh;
   width: 100%;
   height: auto;
   background-color: ${({ theme }) => theme.colors.backgroundColor};
-  color: white;
 
   .show {
     transition: 150ms;
@@ -68,10 +66,6 @@ const AppView = () => {
         <AppProvider>
           <Wrapper className="flex">
             <LoginButton handleLoginClick={handleLoginClick}>LogIn</LoginButton>
-            <LoginForm
-              isShowLogin={isShowLogin}
-              handleLoginClose={handleLoginClose}
-            />
 
             {isLargerThan1280 ? (
               <Nav />

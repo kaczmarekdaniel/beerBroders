@@ -17,7 +17,7 @@ import {
 
 //component imports
 
-import NavAndAppButton from "components/organisms/NavAndAppButton/NavAndAppButton.js";
+import NavAndAppButton from "components/startPages/NavAndAppButton/NavAndAppButton.js";
 import StartView from "./components/views/StartView";
 import AppView from "./components/views/AppView";
 

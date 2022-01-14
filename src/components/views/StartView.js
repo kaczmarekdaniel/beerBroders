@@ -5,12 +5,12 @@ import { GlobalStyle } from "../../assets/styles/GlobalStyle.js";
 import { ThemeProvider } from "styled-components";
 import { theme } from "../../assets/styles/theme";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
 //component imports
 import AboutPage from "../startPages/AboutPage/AboutPage";
-import ContactPage from "../startPages/ContactPage/ContactPage";
 import LandingPage from "../startPages/LandingPage/LandingPage";
-
+import BlogPage from "components/blogPage/BlogPage.js";
+import MainPage from "components/appPages/MainPage/MainPage";
+import LoginPage from "components/startPages/LoginPage/LoginPage.js";
 // eslint-disable-next-line
 
 const AppButton = styled(Link)`
@@ -19,22 +19,26 @@ const AppButton = styled(Link)`
 
 const StartView = () => {
   return (
-    <Router>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Switch>
-          <Route path="/start/contact">
-            <ContactPage />
-          </Route>
-          <Route path="/start/about">
-            <AboutPage />
-          </Route>
-          <Route exact path="/start">
-            <LandingPage />
-          </Route>
-        </Switch>
-      </ThemeProvider>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Switch>
+        <Route path="/start/articles">
+          <BlogPage />
+        </Route>
+        <Route path="/start/about">
+          <AboutPage />
+        </Route>
+        <Route path="/start/app">
+          <MainPage />
+        </Route>
+        <Route path="/start/login">
+          <LoginPage />
+        </Route>
+        <Route exact path="/start">
+          <LandingPage />
+        </Route>
+      </Switch>
+    </ThemeProvider>
   );
 };
 
