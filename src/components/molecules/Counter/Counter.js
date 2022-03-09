@@ -1,9 +1,9 @@
 import { animate } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 
-const Counter = () => {
+const Counter = ({ range }) => {
   const [from, setFrom] = useState(0);
-  const [to, setTo] = useState(100);
+  const [to, setTo] = useState(range);
 
   function Counter({ from, to }) {
     const nodeRef = useRef();
@@ -26,7 +26,7 @@ const Counter = () => {
 
   useEffect(() => {
     setFrom(0);
-    setTo(100);
+    setTo(range);
   }, [to]);
 
   return <Counter from={from} to={to} />;

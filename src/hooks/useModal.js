@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BlogPostModal from "components/blogPage/BlogPostModal";
+import BlogPostModal from "../pages/blogPage/BlogPostModal";
 const useModal = (initialState = false) => {
   const [isOpen, setModalState] = useState(initialState);
 

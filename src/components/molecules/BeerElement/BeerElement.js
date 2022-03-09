@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { useDisclosure } from "@chakra-ui/react";
+import ReviewBeer from "../ReviewBeer/ReviewBeer";
 import {
   Modal,
   Button,
@@ -10,17 +11,19 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Text,
 } from "@chakra-ui/react";
+import Comments from "../Comments/Comments";
 
-const Element = styled.div`
+const Element = styled.button`
   width: 100%;
-  height: 45%;
+  height: 35vh;
   min-height: 150px;
-  margin: 20px 27px 20px 27px;
+  margin: 10px 0 10px 0;
   align-items: flex-end;
   flex-direction: column;
   &:first-of-type {
-    margin-top: 50%;
+    margin-top: 10%;
   }
 
   @media (min-width: 1200px) and (max-width: 1920px) {
@@ -175,44 +178,54 @@ const BeerElement = ({ item }) => {
     setTimeout(() => setVisibility("visible"), 700);
   }, []);
   return (
-    <Element className="flex">
-      <Photo className="flex" color={item.background}>
-        <img src={`${item.photoURL}`} />{" "}
-      </Photo>
-      <ProductInfo className="flex ">
-        <BottomDiv>
-          <p>{item.brand}</p>
-          <p>{item.name}</p>
-          <ReviewContainer>
-            {" "}
-            <Review className="flex" color={color}>
-              {item.average}
-            </Review>
-          </ReviewContainer>
-        </BottomDiv>
-      </ProductInfo>
+    <>
+      <Element className="flex" onClick={onOpen}>
+        <Photo className="flex" color={item.background}>
+          <img src={`${item.photoURL}`} />{" "}
+        </Photo>
+        <ProductInfo className="flex " onClick={onClose}>
+          <BottomDiv>
+            <p>{item.brand}</p>
+            <p>{item.name}</p>
 
-      <Modal onClose={onClose} isOpen={isOpen} isCentered>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Header className="flex">
-              <Review className="flex">{item.average}</Review>
+            <ReviewContainer>
+              {" "}
+              <Review className="flex" color={color}>
+                {item.average}
+              </Review>
+            </ReviewContainer>
+          </BottomDiv>
+        </ProductInfo>
 
-              <div>
-                <p>{item.brand}</p>
-                <p>{item.name}</p>
-              </div>
-            </Header>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody></ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </Element>
+        <Modal isOpen={isOpen} onClose={onClose} size="xl">
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader
+              background={item.background}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flexDirection="column"
+            >
+              <img src={`${item.photoURL}`}></img>
+              <p>{item.brand}</p>
+              <p>{item.name}</p>
+              <Text fontSize="sm" as="samp" fontWeight="300">
+                Zawartość alkoholu: {item.alcohol}%
+              </Text>
+              <Text fontSize="sm" as="samp" fontWeight="300">
+                Kraj pochodzenia: {item.country}
+              </Text>
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody bg="darkgrey">
+              <ReviewBeer postid={item.id} />
+              <Comments postid={item.id} />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </Element>
+    </>
   );
 };
 

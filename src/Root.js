@@ -14,12 +14,12 @@ import {
   Redirect,
   useLocation,
 } from "react-router-dom";
-
+import Footer from "components/Footer/Footer.js";
 //component imports
 
-import NavAndAppButton from "components/startPages/NavAndAppButton/NavAndAppButton.js";
-import StartView from "./components/views/StartView";
-import AppView from "./components/views/AppView";
+import NavAndAppButton from "components/NavAndAppButton/NavAndAppButton.js";
+import StartView from "./views/StartView";
+import AppView from "./views/AppView";
 
 // eslint-disable-next-line
 
@@ -28,15 +28,14 @@ const Root = () => {
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
+        <NavAndAppButton />
         <Switch>
-          <Route path="/app" component={AppView} />
           <Route path="/start">
-            <NavAndAppButton />
-
             <StartView />
           </Route>
           <Redirect to="/start" />
         </Switch>
+        <Footer />
       </ThemeProvider>
     </Router>
   );
