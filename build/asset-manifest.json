@@ -1,20 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.d07b5a27.chunk.css",
-    "main.js": "/static/js/main.3e2a4ab3.chunk.js",
-    "main.js.map": "/static/js/main.3e2a4ab3.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.3045fd93.js",
-    "runtime-main.js.map": "/static/js/runtime-main.3045fd93.js.map",
-    "static/js/2.e22df5b0.chunk.js": "/static/js/2.e22df5b0.chunk.js",
-    "static/js/2.e22df5b0.chunk.js.map": "/static/js/2.e22df5b0.chunk.js.map",
+    "main.css": "/static/css/main.c649823f.css",
+    "main.js": "/static/js/main.d00cb5db.js",
+    "static/media/broders2.webp": "/static/media/broders2.25915731e8d6cddf9e1d.webp",
+    "static/media/faqimage.webp": "/static/media/faqimage.5ff298cc124afa9db9f1.webp",
     "index.html": "/index.html",
-    "static/css/main.d07b5a27.chunk.css.map": "/static/css/main.d07b5a27.chunk.css.map",
-    "static/js/2.e22df5b0.chunk.js.LICENSE.txt": "/static/js/2.e22df5b0.chunk.js.LICENSE.txt"
+    "main.c649823f.css.map": "/static/css/main.c649823f.css.map",
+    "main.d00cb5db.js.map": "/static/js/main.d00cb5db.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.3045fd93.js",
-    "static/js/2.e22df5b0.chunk.js",
-    "static/css/main.d07b5a27.chunk.css",
-    "static/js/main.3e2a4ab3.chunk.js"
+    "static/css/main.c649823f.css",
+    "static/js/main.d00cb5db.js"
   ]
 }
